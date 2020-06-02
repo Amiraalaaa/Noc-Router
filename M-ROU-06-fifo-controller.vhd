@@ -4,8 +4,6 @@ USE ieee.numeric_std.ALL;
 library work;
 use work.all;
 
-
-
 ENTITY controller5 IS
 
 PORT( reset, rdclk,wrclk,r_req,w_req: IN std_logic;
@@ -28,7 +26,8 @@ end component;
   signal wr_counter_out,rd_counter_out,wr_converter_out,rd_converter_out: std_logic_vector(2 downto 0);
 shared variable written_status : std_logic_vector(7 downto 0):= "00000000";
 shared variable rd_address,wr_address:std_logic_vector(2 downto 0):="000";
-signal test,wr_en,rd_en:std_logic; 
+signal wr_en,rd_en:std_logic; 
+shared variable prev_wr_converter_out,prev_rd_converter_out :std_logic_vector(2 downto 0);
 BEGIN
 
 
@@ -51,14 +50,14 @@ empty<='1';
 full<='0';
 written_status:= "00000000";
 END IF;
-IF wr_converter_out' event THEN
+IF wr_converter_out /= prev_wr_converter_out THEN
 wr_en<='0';
 wr_ptr<=wr_address;
 written_status( to_integer(unsigned(wr_address))):='1';
 write_valid<='0';
 wr_address:=wr_converter_out;
 END IF;
-IF rd_converter_out' event THEN
+IF rd_converter_out /= prev_rd_converter_out THEN
 rd_en<='0';
 rd_ptr<=rd_address;
 written_status( to_integer(unsigned(rd_address))):='0';
@@ -94,11 +93,16 @@ wr_en<='1';
 
 
 END IF;
-test<=written_status( to_integer(unsigned(wr_address)));
 
+
+
+
+prev_wr_converter_out:=wr_converter_out;
+prev_rd_converter_out:=rd_converter_out;
 END PROCESS ;
 
 
 
 
 END ARCHITECTURE fifo;
+	
