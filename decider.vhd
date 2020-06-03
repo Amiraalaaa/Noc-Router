@@ -5,7 +5,7 @@ USE ieee.std_logic_1164.ALL;
 ENTITY decider IS
 port (	     clock: in std_logic;
 	     Eflag1,Eflag2,Eflag3,Eflag4: in std_logic;
-	     outFlag: out std_logic
+	     outFlag: out std_ulogic
 	
       );
 END ENTITY decider;
