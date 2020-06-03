@@ -14,7 +14,7 @@ END ENTITY M_ROU_08;
 
 ARCHITECTURE ARCH_M_ROU_08 of M_ROU_08 is
 
-	TYPE state_type IS (turn1, turn2, turn3, turn4);
+	TYPE state_type IS (turn4,turn1,turn2,turn3);
 	SIGNAL current_state: state_type;
 	SIGNAL next_state: state_type;
 BEGIN
