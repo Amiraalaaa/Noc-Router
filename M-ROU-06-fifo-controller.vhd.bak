@@ -2,9 +2,7 @@ LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
 USE ieee.numeric_std.ALL;
 library work;
-use work.my_package.all;
-
-
+use work.all;
 
 ENTITY controller5 IS
 
@@ -51,12 +49,6 @@ IF reset = '1' THEN
 empty<='1';
 full<='0';
 written_status:= "00000000";
-prev_wr_converter_out:="000";
-prev_rd_converter_out:="000";
-rd_en<='0';
-read_valid<='0';
-write_valid<='0';
-wr_en<='0';
 END IF;
 IF wr_converter_out /= prev_wr_converter_out THEN
 wr_en<='0';
@@ -113,3 +105,4 @@ END PROCESS ;
 
 
 END ARCHITECTURE fifo;
+	
